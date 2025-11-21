@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CorvoSuite Link Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: #020617; /* EXACT MATCH TO LOGO BACKGROUND */
+      color: white;
+      text-align: center;
+      padding: 40px 20px;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .header-section {
+      display: flex;
+      align-items: center;
+      gap: 40px;
+      margin-bottom: 40px;
+      padding-bottom: 30px;
+      border-bottom: 1.5px solid rgba(139, 92, 246, 0.2);
+    }
+
+    .logo {
+      width: 100px;
+      flex-shrink: 0;
+      animation: slideDown 0.6s ease-out;
+    }
+
+    .header-text {
+      text-align: left;
+    }
+
+    h1 {
+      font-size: 32px;
+      margin: 0 0 4px 0;
+      font-weight: 700;
+      background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: slideDown 0.7s ease-out 0.1s both;
+    }
+
+    .subtitle {
+      font-size: 14px;
+      opacity: 0.85;
+      margin: 0;
+      animation: slideDown 0.7s ease-out 0.2s both;
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .btn {
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.3), rgba(59, 130, 246, 0.3));
+      backdrop-filter: blur(10px);
+      border: 1.5px solid rgba(139, 92, 246, 0.5);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.15);
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.6s ease;
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.5), rgba(59, 130, 246, 0.5));
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.3);
+      border-color: rgba(139, 92, 246, 0.8);
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    .main-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    /* Agent Card */
+    .agent-card {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+      padding: 28px;
+      border-radius: 16px;
+      border: 1.5px solid rgba(139, 92, 246, 0.4);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 60px rgba(139, 92, 246, 0.2);
+      animation: slideUp 0.7s ease-out 0.3s both;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .agent-photo {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 12px;
+      border: 3px solid;
+      border-image: linear-gradient(135deg, #8b5cf6, #3b82f6) 1;
+      margin-bottom: 12px;
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .agent-photo:hover {
+      transform: scale(1.05);
+    }
+
+    .agent-card h2 {
+      background: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-size: 18px;
+      margin: 8px 0 2px 0;
+    }
+
+    .agent-card > p {
+      margin: 0 0 12px 0;
+      font-size: 13px;
+    }
+
+    .contact-item {
+      margin: 6px 0;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+
+    .contact-item a {
+      color: #8b5cf6;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .contact-item a:hover {
+      color: #3b82f6;
+      text-decoration: underline;
+    }
+
+    .qr-section {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(139, 92, 246, 0.2);
+      width: 100%;
+    }
+
+    .qr-code {
+      width: 100px;
+      height: 100px;
+      margin: 8px auto;
+      padding: 6px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(139, 92, 246, 0.2);
+      transition: transform 0.3s ease;
+    }
+
+    .qr-code:hover {
+      transform: scale(1.05);
+    }
+
+    .qr-label {
+      font-size: 11px;
+      opacity: 0.75;
+      margin-top: 6px;
+      letter-spacing: 0.3px;
+    }
+
+    /* Disclaimer Section */
+    .disclaimer {
+      font-size: 11px;
+      opacity: 0.65;
+      margin-top: 20px;
+      line-height: 1.5;
+      padding: 15px;
+      border-top: 1px solid rgba(139, 92, 246, 0.2);
+      animation: slideUp 0.7s ease-out 0.4s both;
+    }
+
+    .disclaimer p {
+      margin: 6px 0;
+    }
+
+    .card-preview {
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(59, 130, 246, 0.1));
+      border-radius: 16px;
+      border: 1.5px solid rgba(139, 92, 246, 0.35);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 20px 50px rgba(139, 92, 246, 0.25);
+      animation: slideUp 0.7s ease-out;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .card-title {
+      font-size: 18px;
+      margin-bottom: 14px;
+      font-weight: 600;
+      background: linear-gradient(135deg, #8b5cf6, #3b82f6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .card-images {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+    }
+
+    .card-side {
+      text-align: center;
+    }
+
+    .card-img {
+      width: 100%;
+      max-width: 160px;
+      border-radius: 10px;
+      border: 2px solid;
+      border-image: linear-gradient(135deg, #8b5cf6, #3b82f6) 1;
+      box-shadow: 0 12px 32px rgba(139, 92, 246, 0.35);
+      transition: transform 0.3s ease;
+    }
+
+    .card-img:hover {
+      transform: scale(1.05);
+    }
+
+    .card-label {
+      margin-top: 6px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .download-btn {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      text-decoration: none;
+      color: white;
+      font-weight: 600;
+      font-size: 12px;
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.35), rgba(59, 130, 246, 0.35));
+      border: 1px solid rgba(139, 92, 246, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(135deg, rgba(139, 92, 246, 0.6), rgba(59, 130, 246, 0.6));
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        grid-template-columns: 1fr;
+      }
+
+      .btn-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .header-section {
+        flex-direction: column;
+        text-align: center;
+        gap: 20px;
+      }
+
+      .header-text {
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+
+    <!-- HEADER SECTION -->
+    <div class="header-section">
+      <img src="/Logo/Updated Final Logo.png" class="logo" alt="CorvoSuite Logo" />
+      <div class="header-text">
+        <h1>CorvoSuite</h1>
+        <p class="subtitle">Your all-in-one link hub</p>
+      </div>
+    </div>
+
+    <!-- MAIN BUTTONS --> 
+    <div class="btn-grid">
+      <a href="https://www.corvobenefitsgroup.com" class="btn" target="_blank">Book Appointment</a>
+      <a href="https://www.corvobenefitsgroup.com" class="btn" target="_blank">Company Site</a>
+      <a href="https://www.medicare.gov/" class="btn" target="_blank">Medicare Info</a>
+      <a href="https://www.facebook.com/profile.php?id=61583831260765" class="btn" target="_blank">Facebook</a>
+      <a href="https://www.instagram.com/corvobenefitsgroup/" class="btn" target="_blank">Instagram</a>
+      <a href="https://www.linkedin.com/company/110078911/admin/dashboard/" class="btn" target="_blank">LinkedIn</a>
+    </div>
+
+    <!-- MAIN CONTENT (Agent Card & Business Cards) -->
+    <div class="main-content">
+      <!-- AGENT CONTACT CARD -->
+      <div class="agent-card">
+        <img src="/Logo/picture of me.png" class="agent-photo" alt="Agent Photo" />
+
+        <h2>Dakota Myers</h2>
+        <p style="opacity: 0.9;">Licensed Medicare Agent</p>
+
+        <div class="contact-item">📧 Email: <a href="mailto:DakotaMyers@Corvobenefitsgroup.com">DakotaMyers@CorvoBenefitsGroup.com</a></div>
+        <div class="contact-item">📞 Phone: <a href="tel:6812170437">(681) 217-0437</a></div>
+        <div class="contact-item">🌐 Website: <a href="https://corvobenefitsgroup.com" target="_blank">CorvoBenefitsGroup.com</a></div>
+
+        <div class="qr-section">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=https://corvosuite.com" alt="QR Code" class="qr-code" />
+          <div class="qr-label">Scan to visit</div>
+        </div>
+      </div>
+
+      <!-- BUSINESS CARD PREVIEW -->
+      <div class="card-preview">
+        <h2 class="card-title">Business Cards</h2>
+
+        <div class="card-images">
+          <div class="card-side">
+            <img src="/Logo/1.png" alt="Business Card Front" class="card-img" />
+            <p class="card-label">Front</p>
+            <a href="/Logo/1.png" download class="download-btn">Download</a>
+          </div>
+
+          <div class="card-side">
+            <img src="/Logo/2.png" alt="Business Card Back" class="card-img" />
+            <p class="card-label">Back</p>
+            <a href="/Logo/2.png" download class="download-btn">Download</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DISCLAIMERS -->
+    <div class="disclaimer">
+      <p>We do not offer every plan available in your area. Any information we provide is limited to the plans we do offer in your area. Please contact Medicare.gov or 1-800-MEDICARE to get information on all of your options.</p>
+      <p>Corvo Benefits Group LLC is an independent Medicare agency. This link hub is for educational and contact purposes only.</p>
+    </div>
+
+  </div>
+</body>
+</html>
